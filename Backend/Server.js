@@ -55,6 +55,11 @@ app.post("/api/signup", async (req, res) => {
     res.status(500).json({ message: "Server Error. Please Try Again Later" });
   }
 });
+//Function to create a JWT token
+const createSecretToken = (userId) => {
+  const token = jwt.sign({ userId }, "your-secret-key", { expiresIn: "1h" });
+  return token;
+};
 // Route to handle user login
 app.post("/api/login", async (req, res) => {
   try {
@@ -85,6 +90,9 @@ app.post("/api/login", async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
+});
+app.get("/home", (req, res) => {
+  res.send("welcome to the home page!");
 });
 
 // Start the server

@@ -10,11 +10,12 @@ const HomePage = () => {
   const handleLogout = () => {
     console.log('User logged out!');
     alert('Logged out successfully!');
+    navigate('/Signup')
   };
 
   const handleProfile = () => {
     console.log('Navigating to profile...');
-    navigate('/profile');
+    navigate('/EditProfile');
   };
 
   return (
