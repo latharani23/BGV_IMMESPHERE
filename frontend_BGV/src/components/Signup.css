@@ -5,7 +5,7 @@
 .signup-container {
     width: 100%;
     max-width: 400px;
-    margin: 50px auto;
+    margin: 80px auto;
     padding: 20px;
     background-color: #f7f7f7;
     border-radius: 8px;
@@ -27,7 +27,7 @@
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 20px;
     box-sizing: border-box;
   }
   
@@ -47,7 +47,7 @@
     color: white;
     border: none;
     border-radius: 4px; /* Match input border radius */
-    font-size: 16px;
+    font-size: 20px;
     cursor: pointer;
     box-sizing: border-box; /* Ensure proper box model */
   }
@@ -61,7 +61,7 @@
   @media (max-width: 480px) {
     .signup-container input,
     .signup-container button {
-      font-size: 14px;
+      font-size: 20px;
     }
   }
   
@@ -79,7 +79,7 @@
   
     .signup-container input,
     .signup-container button {
-      font-size: 14px;
+      font-size: 20px;
     }
   }
   
