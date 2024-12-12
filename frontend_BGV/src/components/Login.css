@@ -1,10 +1,8 @@
-/* Login.css */
-
 /* Center the login form container */
 .login-container {
   width: 100%;
   max-width: 400px;
-  margin: 50px auto;
+  margin: 80px auto;
   padding: 20px;
   background-color: #f7f7f7;
   border-radius: 8px;
@@ -26,23 +24,18 @@
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 20px;
   box-sizing: border-box;
 }
 
-/* Focus effect on input fields */
-.login-container input:focus {
-  outline: none;
-  border-color: #4CAF50;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
-}
+
 
 /* Style the login button */
 .login-container button {
   width: 100%; /* Match input width */
   padding: 12px; /* Same padding as inputs */
   margin: 10px 0; /* Align spacing with inputs */
-  background-color: #808080; /* Grey button color */
+  background-color: #2a2da9; /* Consistent button color */
   color: white;
   border: none;
   border-radius: 4px; /* Match input border radius */
@@ -51,15 +44,27 @@
   box-sizing: border-box; /* Ensure proper box model */
 }
 
-/* Hover effect for the button */
-.login-container button:hover {
-  background-color: #696969; /* Slightly darker shade */
-}
 
 /* Responsive styling for small screens */
 @media (max-width: 480px) {
   .login-container input,
   .login-container button {
-    font-size: 20px;
+      font-size: 20px;
+  }
+}
+
+/* Responsive styling for small screens */
+@media (max-width: 480px) {
+  .login-container {
+      padding: 20px;
+  }
+
+  .login-container h2 {
+      font-size: 20px;
+  }
+
+  .login-container input,
+  .login-container button {
+      font-size: 20px;
   }
 }

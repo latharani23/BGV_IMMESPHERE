@@ -1,49 +1,540 @@
-/* Styling for the navbar */
+/* Resetting some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Navbar */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #f8f9fa; /* Light background color */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #007bff;
+  text-decoration: none;
+  text-align: left; /* Align text to the left */
+}
+
+.navbar-icons {
+  display: flex;
+  gap: 20px;
+}
+
+.icon {
+  font-size: 3.5rem;
+  color: #007bff;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+}
+
+.icon:active {
+  transform: scale(1);
+}
+
+/* Step Progress */
+.ordered-list-container {
+  margin: 60px 80px;
+}
+
+ol {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  position: relative;
+  margin-bottom: 0;
+}
+
+li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 30%;
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+li.completed span {
+  background-color: #28a745;
+}
+
+li.active span {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Ensure text is vertically centered inside the span */
+
+
+li::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 100%; /* Ensure the line connects to the next step */
+  width: 100%;
+  height: 3px;
+  background-color: #007bff;
+  z-index: -1;
+  transition: background-color 0.3s ease, width 0.3s ease;
+}
+
+li:last-child::after {
+  display: none;
+}
+
+li.active::after {
+  background-color: #007bff;
+  width: 100%; /* Ensure the line stretches when active */
+}
+
+.step-content h3 {
+  font-size: 2rem;
+  margin-bottom: 0px;
+  margin-top: 10px;
+  color: #050505;
+  text-align: left; /* Align text to the left */
+}
+
+.step-content form {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  text-align: left;
+}
+
+.step-content form div {
+  margin-bottom: 25px;
+}
+
+.step-content form input {
+  padding: 20px;
+  font-size: 2rem;
+  border-radius: 7px;
+  border: 3px solid #ccc;
+  outline: none;
+  transition: border 0.3s ease;
+  background-color: #f7f7f7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.step-content form input:focus {
+  border-color: #007bff;
+  background-color: #ffffff;
+}
+
+/* Navigation Buttons */
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top:1%;
+}
+
+.navigation-buttons button {
+  padding: 10px 20px;
+  font-size: 2rem;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navigation-buttons button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navigation-buttons button:disabled {
+  background-color: #363637;
+  cursor: not-allowed;
+}
+
+.navigation-buttons button:disabled:hover {
+  background-color: #ccc;
+  box-shadow: none;
+}
+
+/* Stepper layout */
+.stepper-wrapper {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+
+.stepper-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  font-size: 14px;
+}
+
+.stepper-item::after {
+  position: absolute;
+  content: "";
+  border-bottom: 2px solid #ccc;
+  width: 100%;
+  top: 20px;
+  left: 50%;
+  z-index: 2;
+}
+
+.stepper-item .step-counter {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ccc;
+  margin-bottom: 6px;
+}
+
+.stepper-item.active {
+  font-weight: bold;
+}
+
+.stepper-item.completed .step-counter {
+  background-color: #4bb543;
+}
+
+.stepper-item.completed::after {
+  position: absolute;
+  content: "";
+  border-bottom: 2px solid #4bb543;
+  width: 100%;
+  top: 20px;
+  left: 50%;
+  z-index: 3;
+}
+
+.stepper-item:first-child::before {
+  content: none;
+}
+
+.stepper-item:last-child::after {
+  content: none;
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .stepper-item {
+    font-size: 12px;
   }
-  
-  /* Ensure the navbar brand title is aligned left */
-  .navbar-brand {
-    display: flex;
-    justify-content: flex-start; /* Align content to the left */
-    align-items: center;
+
+  .step-content {
+    align-items: flex-start;
+    height: 100%; 
   }
-  
-  /* Container for the profile and logout icons, to align them right */
-  .navbar-icons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    margin-right: 80px;
+}
+
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Adjust the number of columns as per requirement */
+  column-gap: 90px; /* Adjust the space between columns */
+  row-gap: 20px; /* Space between rows */
+  width: 85%;
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-top: 20px;
+}
+
+.grid-container div {
+  text-align: left;
+}
+
+
+
+.grid-container input {
+  width: 100%;
+  padding: 9px;
+  border-radius: 7px;
+  border: 3px solid #ccc;
+  outline: none;
+  background-color: #f7f7f7;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+.grid-container input:focus {
+  border-color: #007bff;
+  background-color: #ffffff;
+}
+
+
+
+.form-item {
+  border: 1px solid #ddd;
+  padding: 5px;
+  background-color: #f9f9f9;
+}
+
+.form-item h3 {
+  text-align: center;
+}
+
+.form-field {
+  margin-bottom: 1px;
+}
+
+
+.form-field label {
+  font-size: 24px;
+  font-family: Arial, sans-serif;
+
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 20px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  font-size: 1.3rem;
+  font-family: Arial, sans-serif;
+
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+.form-container{
+width: 100%;
+margin-top: 20px;
+margin-bottom: 50px;
+padding: 20px;
+}
+
+.form-field input::placeholder {
+  font-size: 1.3rem;
+  font-family: Arial, sans-serif;
+}
+/* Container for Step Content */
+.step-content {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 40px;
+  max-width: 500px; /* Wider max-width */
+  margin: auto; /* Centered with margin */
+  font-family: Arial, sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left; /* Aligns text to the left */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+  margin-top: 6%;
+  align-items: center; /* Center elements inside each section */
+}
+/* Error message styling */
+.step-content p[style] {
+  color: red; /* Error message color */
+  font-size: 18px; /* Larger text size for emphasis */
+  text-align: center;
+  margin-top: 0px;
+}
+
+.step-content h3 {
+  font-size: 1.6rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center; /* Center the headings */
+}
+
+/* Form Styling */
+.step-content form {
+  width: 100%; /* Ensure form takes full width of the container */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Uniform spacing between elements */
+}
+
+.step-content label {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: bold;
+  display: block;
+  text-align: center; /* Left align the label */
+}
+
+/* File Input */
+.step-content input[type="file"] {
+  width: 70%;
+  max-width: 500px; /* Maximum width for file input */
+  padding: 12px; /* Adding padding for better appearance */
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  outline: none;
+  margin: 0 auto; /* Center the file input */
+}
+
+.step-content input[type="file"]:focus {
+  border-color: #007bff;
+  background-color: #eef6ff;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .step-content {
+    padding: 20px;
+    max-width: 90%; /* Ensure it's responsive */
   }
-  
-  /* Icon styling */
-  .icon {
-    font-size: 50px; /* Set icon size */
-    margin-left: 15px; /* Space between icons */
-    cursor: pointer;
-    transition: transform 0.3s ease; /* Smooth scaling transition */
+
+  .step-content h3 {
+    font-size: 1.4rem;
   }
-  
-  /* Profile icon color */
-  .profile-icon {
-    color: #007bff; /* Blue color for the profile icon */
+
+  .step-content form {
+    gap: 10px;
   }
-  
-  /* Logout icon color */
-  .logout-icon {
-    color: #dc3545; /* Red color for the logout icon */
+
+  .step-content label {
+    font-size: 1rem;
   }
-  
-  /* Hover effect for icons */
-  .icon:hover {
-    transform: scale(1.2); /* Slightly enlarge the icons when hovered */
+}
+
+/* Step 3 CSS Styles */
+
+.Additional-Question {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  padding: 20px; /* Add some padding around the content */
+  width: 100%;
+  max-width: 1200px; /* Optional: Adjust the max width for better readability */
+  margin: 20px auto; /* Center the step-content horizontally */
+}
+
+/* Styling for Questions (Text) */
+.Additional-Question p {
+  font-size: 24px; /* Set font size for the question text */
+  margin-bottom: 15px; /* Space between the question and the form element */
+  text-align: left; /* Ensure text is aligned to the left */
+  width: 100%; /* Ensure the text takes the full width */
+}
+
+/* Styling for Radio Buttons, Checkboxes, and Inputs */
+.radio-option {
+  margin-bottom: 15px; /* Space between form elements */
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Vertically align elements */
+  justify-content: flex-start; /* Align radio buttons and checkboxes to the left */
+}
+
+.radio-input {
+  margin-right: 10px; /* Space between radio/checkbox button and label */
+}
+
+/* Label Styling */
+.radio-label {
+  font-size: 24px; /* Set font size for labels */
+  font-weight: normal; /* Regular font weight for labels */
+}
+
+/* Styling for Select Dropdown */
+.gender-select {
+  width: 100%; /* Full width for the select dropdown */
+  padding: 10px; /* Add padding inside the dropdown */
+  margin-bottom: 20px; /* Space between the dropdown and next element */
+  font-size: 24px; /* Set font size for dropdown options */
+}
+
+/* Styling for the form field container */
+.position-field {
+  margin-bottom: 20px; /* Space between the form fields */
+  width: 100%; /* Ensure it takes up full width */
+}
+
+/* Styling for the label */
+.position-field label {
+  font-size: 24px; /* Set font size for the label */
+  font-weight: 600; /* Make the label text bold */
+  margin-bottom: 8px; /* Add space below the label */
+  display: block; /* Ensure label occupies full width */
+  color: #333; /* Darker color for label */
+  visibility: hidden; /* Keep the label hidden (if you want) or you can make it visible if needed */
+}
+
+/* Styling for the input field */
+.position-field input[type="text"] {
+  width: 100%; /* Ensure input takes up full width of its container */
+  padding: 10px 15px; /* Add padding for a comfortable feel */
+  font-size: 24px; /* Set font size for input text */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px; /* Rounded corners */
+  outline: none; /* Remove default outline on focus */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for focus state */
+}
+
+/* Focus state for the input field */
+.position-field input[type="text"]:focus {
+  border-color: #007bff; /* Blue border color on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Soft blue glow */
+}
+
+/* Placeholder styling for the input field */
+.position-field input[type="text"]::placeholder {
+  color: #888; /* Lighter color for the placeholder */
+  font-style: italic; /* Italicize the placeholder */
+}
+
+/* Additional Styling for Small Screens */
+@media (max-width: 768px) {
+  .confirmation-step {
+    padding: 15px; /* Reduce padding for smaller screens */
+    margin-left: 10px; /* Reduce left margin */
+    margin-right: 10px; /* Reduce right margin */
   }
-  
+
+  .radio-label {
+    font-size: 24px; /* Smaller font size for labels */
+  }
+
+  .position-field {
+    margin-bottom: 15px; /* Slightly reduce space between fields */
+  }
+
+  .position-field input[type="text"] {
+    padding: 8px 12px; /* Adjust padding on smaller screens */
+    font-size: 24px; /* Adjust font size for smaller screens */
+  }
+
+  .position-field label {
+    font-size: 24px; /* Adjust label font size on smaller screens */
+  }
+}

@@ -4,6 +4,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Home from './components/Home';
 import EditProfile from './components/EditProfile';
+import Validate from './components/Validate';
 
 import './App.css';
 
@@ -17,9 +18,11 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/editprofile" element={<EditProfile/>} />
+        <Route path="/validate" element={<Validate/>} />
 
-        
+
+
       </Routes>
     </div>
   );
