@@ -103,6 +103,48 @@ app.get("/home", (req, res) => {
   res.send("welcome to the home page!");
 });
 
+
+// Schema definition for the form
+const formSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  phoneNumber: String,
+  permanentAddress: String,
+  currentAddress: String,
+  universityGraduated: String,
+  fieldOfStudy: String,
+  passedOutYear: String,
+  cgpa: String,
+  position: String,
+  organizationName: String,
+  yearsOfExperience: String,
+  companyLocation: String,
+  panNumber: String,
+});
+
+const Form = mongoose.model('Form', formSchema);
+
+app.post('/submitForm', async (req, res) => {
+  try {
+    const formData = req.body;
+
+    // Validate required fields
+    if (!formData.name || !formData.email || !formData.phoneNumber) {
+      return res.status(400).json({ message: "Name, email, and phone number are required fields." });
+    }
+
+    // Save form data to the database
+    const newForm = new Form(formData);
+    await newForm.save();
+
+    // Respond with success status
+    res.status(200).json({ message: 'Form submitted successfully' });
+  } catch (error) {
+    console.error("Error storing form data:", error.message);
+    res.status(500).json({ message: 'Error storing form data', error: error.message });
+  }
+});
+
 // Start the server
 app.listen(3000, () => {
   console.log("Server is running on http://localhost:3000");
