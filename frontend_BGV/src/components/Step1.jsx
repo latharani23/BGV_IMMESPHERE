@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios"; // for making HTTP requests
-import { useHistory } from 'react-router-dom';
 
 const FormComponent = () => {
   const [name, setName] = useState("");
@@ -20,9 +19,6 @@ const FormComponent = () => {
   const [currentStep, setCurrentStep] = useState(1);  
   const [error, setError] = useState('');
 
-
-  
-
   const validateForm = () => {
     let isValid = true;
   
@@ -30,58 +26,48 @@ const FormComponent = () => {
       if (name.trim() === '') {
         setError('Name is required');
         isValid = false;
-      }
-      if (organizationName.trim() === '') {
+      } else if (organizationName.trim() === '') {
         setError('Organization Name is required');
         isValid = false;
-      }
-      if (email.trim() === '') {
+      } else if (email.trim() === '') {
         setError('Email is required');
         isValid = false;
-      }
-      if (PhoneNumber.trim() === '') {
-        setError('Phone Number Name is required');
+      } else if (PhoneNumber.trim() === '') {
+        setError('Phone Number is required');
         isValid = false;
-      }
-      if (CurrentAddress.trim() === '') {
+      } else if (CurrentAddress.trim() === '') {
         setError('Current Address is required');
         isValid = false;
-      }
-      
-      if (UniversityGraduated.trim() === '') {
-        setError('University Name is required');
+      } else if (UniversityGraduated.trim() === '') {
+        setError('University of Graduation is required');
         isValid = false;
-      }
-      if (FieldOfStudy.trim() === '') {
-        setError('Field Of Study Name is required');
+      } else if (FieldOfStudy.trim() === '') {
+        setError('Field of Study is required');
         isValid = false;
-      }
-      if (PassedOutYear.trim() === '') {
-        setError('PassedOutRequired is required');
+      } else if (PassedOutYear.trim() === '') {
+        setError('Passed Out Year is required');
         isValid = false;
-      }
-      if (CGPA.trim() === '') {
+      } else if (CGPA.trim() === '') {
         setError('CGPA is required');
         isValid = false;
-      }
-      if (yearsOfExperience.trim() === '') {
+      } else if (yearsOfExperience.trim() === '') {
         setError('Years of Experience is required');
         isValid = false;
-      }
-      if (companyLocation.trim() === '') {
+      } else if (companyLocation.trim() === '') {
         setError('Company Location is required');
         isValid = false;
-      }
-      if (panNumber.trim() === '') {
+      } else if (panNumber.trim() === '') {
         setError('PAN/Aadhar Number is required');
         isValid = false;
       }
+
       if (!isValid) return false;
-  
-      setError(''); // Clear error if all fields are valid
-      return true; 
     }
+
+    setError(''); // Clear error if all fields are valid
+    return true;
   }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     
@@ -102,30 +88,61 @@ const FormComponent = () => {
       companyLocation,
       panNumber
     };
-  
+
     // Perform form validation before sending data
     if (validateForm()) {
       try {
-        const response = await axios.post('http://localhost:3000/submitForm', formData);
+        // Submit the form data to the backend
+        const response = await axios.post("http://localhost:5000/submitForm", formData);
         
         // Check if the response status is OK (200)
         if (response.status === 200) {
           alert('Form submitted successfully');
+          console.log(formData)
+          
+          // Fetch the updated data after the form submission
+          const updatedDataResponse = await axios.get('http://localhost:5000/getUpdatedData');
+          
+          // Update the state with the updated data
+          if (updatedDataResponse.status === 200) {
+            const updatedData = updatedDataResponse.data;
+            
+            setName(updatedData.name);
+            setEmail(updatedData.email);
+            setPhoneNumber(updatedData.PhoneNumber);
+            setPermanentAddress(updatedData.PermanentAddress);
+            setCurrentAddress(updatedData.CurrentAddress);
+            setUniversityGraduated(updatedData.UniversityGraduated);
+            setFieldOfStudy(updatedData.FieldOfStudy);
+            setPassedOutYear(updatedData.PassedOutYear);
+            setCGPA(updatedData.CGPA);
+            setPosition(updatedData.Position);
+            setOrganizationName(updatedData.organizationName);
+            setYearsOfExperience(updatedData.yearsOfExperience);
+            setCompanyLocation(updatedData.companyLocation);
+            setPanNumber(updatedData.panNumber);
+            
+            // Optionally, you can navigate to a different page after successful submission and fetching updated data
+            // useHistory().push('/success'); // Example
+          }
         } else {
           alert('Error submitting form: ' + response.statusText);
+          console.log(formData)
         }
       } catch (error) {
         // Handle any errors that occur during the request
+        console.log(formData)
+
         alert('Error submitting form: ' + error.message);
+        console.log(formData)
+
+        
       }
     }
   };
-  
-
-  
-   
 
   return (
+    <form onSubmit={handleSubmit}>
     <div className="form-container">
       <div className="grid-container">
         <div className="form-item">
@@ -346,8 +363,12 @@ const FormComponent = () => {
             </div>
           </form>
         </div>
+
       </div>
+      <button type="submit">Save Data</button>
+
     </div>
+    </form>
   );
 };
 

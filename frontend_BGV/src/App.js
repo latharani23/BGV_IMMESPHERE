@@ -4,7 +4,6 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Home from './components/Home';
 import EditProfile from './components/EditProfile';
-import Validate from './components/Validate';
 
 import './App.css';
 
@@ -19,7 +18,6 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/editprofile" element={<EditProfile/>} />
-        <Route path="/validate" element={<Validate/>} />
 
 
 

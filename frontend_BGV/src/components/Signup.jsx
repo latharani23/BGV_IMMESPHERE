@@ -51,7 +51,7 @@ const Signup = () => {
 
     try {
       // Sending POST request to the backend to sign up the user
-      const response = await axios.post("http://localhost:3000/api/signup", formData);
+      const response = await axios.post("http://localhost:5000/api/signup", formData);
 
       // Display success message
       setMessage(response.data.message);

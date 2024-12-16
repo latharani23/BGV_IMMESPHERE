@@ -86,7 +86,7 @@ const HomePage = () => {
       {/* Step Content */}
       <div className="step-content-container">{renderStepContent()}</div>
 
-      {/* Navigation Buttons */}
+    
       <div className="navigation-buttons">
         <button
           className="btn btn-secondary"
