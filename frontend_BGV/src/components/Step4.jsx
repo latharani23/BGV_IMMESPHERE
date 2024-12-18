@@ -40,44 +40,20 @@ const Step4 = () => {
       });
   }, []);  // Empty dependency array ensures this runs only once on mount
   
-  // Handle resume download
-  const handleDownload = () => {
-    if (!formData?.resumeFileName) {
-      alert('No resume file found.');
-      return;
-    }
-
-    // Assuming the server serves the resume file at /download/<filename>
-    const resumeUrl = `http://localhost:5000/download/${formData.resumeFileName}`;
-    window.location.href = resumeUrl; // This will trigger the file download
-  };
-
-  // Define handleSubmit function
-  const handleSubmit = () => {
-    if (!formData) {
-      alert('No data available to submit.');
-      return;
-    }
-
-    // Prepare the data to be sent to the server
+  const handleSubmit = async () => {
     const dataToSubmit = {
-      ...formData,
-      ...updatedData
+        ...updatedData // Ensure updatedData contains the necessary fields, including _id
     };
 
-    // Send the data to the server
-    axios.post('http://localhost:5000/updateUser ', dataToSubmit)
-      .then(response => {
-        // Handle success response
-        alert('Form submitted successfully!');
-        console.log('Server response:', response.data);
-      })
-      .catch(error => {
-        // Handle error response
-        console.error('Error submitting form:', error);
-        alert('Failed to submit form. Please try again.');
-      });
-  };
+    console.log('Data to submit:', dataToSubmit); // Log the data being sent
+
+    // Send the request to update the user
+    const response = await axios.post('http://localhost:5000/updateuser', dataToSubmit);
+    
+    // If the request is successful, show a success message
+    alert('User  updated successfully!');
+    console.log('Server response:', response.data);
+};
 
   // Handle error state
   if (error) {
@@ -105,10 +81,13 @@ const Step4 = () => {
           <p><strong>Email:</strong> {isEditing ? <input type="email" value={updatedData?.email} onChange={(e) => setUpdatedData({ ...updatedData, email: e.target.value })} /> : updatedData?.email || 'N/A'}</p>
           <p><strong>Phone:</strong> {isEditing ? <input type="text" value={updatedData?.PhoneNumber} onChange={(e) => setUpdatedData({ ...updatedData, PhoneNumber: e.target.value })} /> : updatedData?.PhoneNumber || 'N/A'}</p>
           <p><strong>Current Address:</strong> {isEditing ? <input type="text" value={updatedData?.CurrentAddress} onChange={(e) => setUpdatedData({ ...updatedData, CurrentAddress: e.target.value })} /> : updatedData?.CurrentAddress || 'N/A'}</p>
+         {/* <p><strong>Permanent Address:</strong> {isEditing ? <input type="text" value={updatedData?.PermanentAddress} onChange={(e) => setUpdatedData({ ...updatedData, PermanentAddress: e.target.value })} /> : updatedData?.PermanentAddress || 'N/A'}</p>*/}
           <p><strong>University Graduated:</strong> {isEditing ? <input type="text" value={updatedData?.UniversityGraduated} onChange={(e) => setUpdatedData({ ...updatedData, UniversityGraduated: e.target.value })} /> : updatedData?.UniversityGraduated || 'N/A'}</p>
           <p><strong>Field Of Study:</strong> {isEditing ? <input type="text" value={updatedData?.FieldOfStudy} onChange={(e) => setUpdatedData({ ...updatedData, FieldOfStudy: e.target.value })} /> : updatedData?.FieldOfStudy || 'N/A'}</p>
           <p><strong>Passed Out Year:</strong> {isEditing ? <input type="text" value={updatedData?.PassedOutYear} onChange={(e) => setUpdatedData({ ...updatedData, PassedOutYear: e.target.value })} /> : updatedData?.PassedOutYear || 'N/A'}</p>
+          <p><strong>University Location:</strong> {isEditing ? <input type="text" value={updatedData?.UniversityLocation} onChange={(e) => setUpdatedData({ ...updatedData, UniversityLocation: e.target.value })} /> : updatedData?.UniversityLocation || 'N/A'}</p>
           <p><strong>CGPA:</strong> {isEditing ? <input type="text" value={updatedData?.CGPA} onChange={(e) => setUpdatedData({ ...updatedData, CGPA: e.target.value })} /> : updatedData?.CGPA || 'N/A'}</p>
+         { /*<p><strong>Position:</strong> {isEditing ? <input type="text" value={updatedData?.Position} onChange={(e) => setUpdatedData({ ...updatedData, Position: e.target.value })} /> : updatedData?.Position || 'N/A'}</p>*/}
           <p><strong>Organization Name:</strong> {isEditing ? <input type="text" value={updatedData?.organizationName} onChange={(e) => setUpdatedData({ ...updatedData, organizationName: e.target.value })} /> : updatedData?.organizationName || 'N/A'}</p>
           <p><strong>Years of Experience:</strong> {isEditing ? <input type="text" value={updatedData?.yearsOfExperience} onChange={(e) => setUpdatedData({ ...updatedData, yearsOfExperience: e.target.value })} /> : updatedData?.yearsOfExperience || 'N/A'}</p>
           <p><strong>Company Location:</strong> {isEditing ? <input type="text" value={updatedData?.companyLocation} onChange={(e) => setUpdatedData({ ...updatedData, companyLocation: e.target.value })} /> : updatedData?.companyLocation || 'N/A'}</p>
@@ -124,12 +103,6 @@ const Step4 = () => {
         <p><strong>Checkbox 1:</strong> {isEditing ? <input type="checkbox" checked={formData?.checkboxValues?.[0]} onChange={(e) => setFormData({ ...formData, checkboxValues: [e.target.checked, formData?.checkboxValues?.[1]] })} /> : formData?.checkboxValues?.[0] ? 'Yes' : 'No'}</p>
         <p><strong>Checkbox 2:</strong> {isEditing ? <input type="checkbox" checked={formData?.checkboxValues?.[1]} onChange={(e) => setFormData({ ...formData, checkboxValues: [formData?.checkboxValues?.[0], e.target.checked] })} /> : formData?.checkboxValues?.[1] ? 'Yes' : 'No'}</p>
 
-        {/* Display Resume Information */}
-        <h4>Resume Information</h4>
-        <p><strong>Resume File Name:</strong> {formData?.resumeFileName || 'N/A'}</p>
-        {formData?.resumeFileName && (
-          <button onClick={handleDownload}>Download Resume</button>
-        )}
       </div>
 
       {/* Submit button */}

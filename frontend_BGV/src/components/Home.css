@@ -98,6 +98,17 @@ li::after {
   z-index: -1;
   transition: background-color 0.3s ease, width 0.3s ease;
 }
+li::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 100%; /* Ensure the line connects to the next step */
+  width: 100%;
+  height: 3px;
+  background-color: #007bff;
+  z-index: -1;
+  transition: background-color 0.3s ease, width 0.3s ease;
+}
 
 li:last-child::after {
   display: none;
@@ -150,16 +161,19 @@ li.active::after {
   justify-content: space-between;
   margin-left: 10%;
   margin-right: 10%;
-  margin-top:1%;
+  margin-top:0%;
+  margin-bottom: 2%;
 }
 
 .navigation-buttons button {
   padding: 10px 20px;
   font-size: 2rem;
   border: none;
+  flex:1;
   background-color: #007bff;
   color: white;
   border-radius: 5px;
+  max-width: 150px;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -172,6 +186,7 @@ li.active::after {
 .navigation-buttons button:disabled {
   background-color: #363637;
   cursor: not-allowed;
+  display: flex;
 }
 
 .navigation-buttons button:disabled:hover {
@@ -428,6 +443,7 @@ padding: 20px;
   }
 }
 
+/* step 3css */
 /* Step 3 CSS Styles */
 
 .Additional-Question {
@@ -436,8 +452,10 @@ padding: 20px;
   align-items: flex-start; /* Align items to the left */
   padding: 20px; /* Add some padding around the content */
   width: 100%;
-  max-width: 1200px; /* Optional: Adjust the max width for better readability */
+  max-width: 1000px; /* Optional: Adjust the max width for better readability */
+  background-color: #faf8f8;
   margin: 20px auto; /* Center the step-content horizontally */
+  margin-top: 40px; /* Add space at the top */
 }
 
 /* Styling for Questions (Text) */
@@ -468,8 +486,9 @@ padding: 20px;
 
 /* Styling for Select Dropdown */
 .gender-select {
-  width: 100%; /* Full width for the select dropdown */
+  width: 50%; /* Full width for the select dropdown */
   padding: 10px; /* Add padding inside the dropdown */
+  margin-right: 50%;
   margin-bottom: 20px; /* Space between the dropdown and next element */
   font-size: 24px; /* Set font size for dropdown options */
 }
@@ -487,7 +506,6 @@ padding: 20px;
   margin-bottom: 8px; /* Add space below the label */
   display: block; /* Ensure label occupies full width */
   color: #333; /* Darker color for label */
-  visibility: hidden; /* Keep the label hidden (if you want) or you can make it visible if needed */
 }
 
 /* Styling for the input field */
@@ -498,7 +516,8 @@ padding: 20px;
   border: 1px solid #ccc; /* Light gray border */
   border-radius: 5px; /* Rounded corners */
   outline: none; /* Remove default outline on focus */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for focus state */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+  /* Smooth transition for focus state */
 }
 
 /* Focus state for the input field */
@@ -513,16 +532,31 @@ padding: 20px;
   font-style: italic; /* Italicize the placeholder */
 }
 
+/* Submit Button Styling */
+.submit-btn {
+  background-color: #22be27; /* Blue background */
+  color: white; /* White text */
+  padding: 12px 20px; /* Padding for the button */
+  font-size: 24px; /* Font size for button text */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-right:90%;
+  width: 20%; /* Full width */
+  transition: background-color 0.3s ease; /* Smooth transition for hover */
+}
+
+
 /* Additional Styling for Small Screens */
 @media (max-width: 768px) {
-  .confirmation-step {
+  .Additional-Question {
     padding: 15px; /* Reduce padding for smaller screens */
     margin-left: 10px; /* Reduce left margin */
     margin-right: 10px; /* Reduce right margin */
   }
 
   .radio-label {
-    font-size: 24px; /* Smaller font size for labels */
+    font-size: 20px; /* Smaller font size for labels */
   }
 
   .position-field {
@@ -531,10 +565,18 @@ padding: 20px;
 
   .position-field input[type="text"] {
     padding: 8px 12px; /* Adjust padding on smaller screens */
-    font-size: 24px; /* Adjust font size for smaller screens */
+    font-size: 20px; /* Adjust font size for smaller screens */
   }
 
   .position-field label {
-    font-size: 24px; /* Adjust label font size on smaller screens */
+    font-size: 20px; /* Adjust label font size on smaller screens */
+  }
+
+  .gender-select {
+    font-size: 20px; /* Adjust font size for select dropdown */
+  }
+
+  .submit-btn {
+    font-size: 20px; /* Adjust font size for submit button */
   }
 }

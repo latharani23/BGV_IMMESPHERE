@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Step2.css"; 
-
-
 
 const Step2 = () => {
   const [resume, setResume] = useState(null);
+  const [uploadedFileName, setUploadedFileName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -46,28 +44,65 @@ const Step2 = () => {
       });
 
       // Handle successful response
+      setUploadedFileName(response.data.file); // Update state with uploaded file name
       alert('Resume submitted successfully!');
     } catch (error) {
       // Handle error response
-      console.log(error)
+      console.log(error);
       setError('Error uploading resume. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
+  // Inline styles
+  const containerStyle = {
+    padding: '20px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+    maxWidth: '700px',
+    margin: '300px auto', // Center the container
+    minHeight: '350px', // Increase the minimum height of the container
+
+    textAlign: 'left', // Align text to the left
+  };
+
+  const buttonStyle = {
+    backgroundColor:'#28a745',
+    color: 'white',
+    border: 'none',
+    padding: '10px 20px',
+    fontSize: '16px', // Adjusted font size for better appearance
+    cursor: 'pointer',
+    borderRadius: '5px',
+    transition: 'background-color 0.3s',
+    width: '30%', // Make button full width
+  };
+
   return (
-    <div className="resume-container">
-      <h3>Upload Resume</h3>
+    <div style={containerStyle}>
+      <h3>Upload Resume</h3><br></br>
       <input
         type="file"
         onChange={handleFileChange}
-        className="form-field"
+        style={{ marginBottom: '10px', width: '100%' }} // Full width
       />
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button1 onClick={handleSubmit} disabled={loading}>
+      <button
+        style={loading ? { ...buttonStyle, backgroundColor: 'lightgray' } : buttonStyle}
+        onClick={handleSubmit}
+        disabled={loading}
+      >
         {loading ? 'Submitting...' : 'Submit'}
-      </button1>
+      </button>
+      <br /><br />
+      {/* Display the uploaded file name */}
+      {uploadedFileName && (
+        <div>
+          <h4>Uploaded File:</h4><br></br>
+          <p>{uploadedFileName}</p>
+        </div>
+      )}
     </div>
   );
 };

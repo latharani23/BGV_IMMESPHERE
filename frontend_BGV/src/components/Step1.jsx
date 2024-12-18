@@ -364,9 +364,22 @@ const FormComponent = () => {
           </form>
         </div>
 
-      </div>
-      <button type="submit">Save Data</button>
-
+      </div><br></br><br></br><br></br>
+      <button
+  type="submit"
+  style={{
+    backgroundColor: '#28a745', // Green background color
+    color: 'white', // White text color
+    padding: '10px 15px', // Padding for the button
+    fontSize: '26px', // Font size for button text
+    border: 'none', // No border
+    borderRadius: '5px', // Rounded corners
+    cursor: 'pointer', // Pointer cursor on hover
+  }}
+>
+  Save Data
+</button>
+      
     </div>
     </form>
   );

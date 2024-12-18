@@ -10,8 +10,7 @@ const path = require('path');
 const app = express();
 const FormData = require('./models/FormData'); // Import FormData model
 const UserForm = require('./models/UserForm'); // Import UserForm model
-
-
+const UpdatedUser  = require('./models/updatedUser.js'); // Correct import
 app.use(express.json());
 
 // Middleware
@@ -160,7 +159,7 @@ app.get('/getUpdatedData', async (req, res) => {
   }
 });
 
-// Define storage for uploads
+{/*// Define storage for uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/'); // Directory to store files
@@ -191,7 +190,7 @@ app.post('/upload', upload.single('resume'), (req, res) => {
   res.status(200).json({ message: 'Resume uploaded successfully!', file: req.file.filename });
 });
 
-app.get('/getUpdatedData', async (req, res) => {
+app.get('/getResume', async (req, res) => {
   try {
     const userData = await User.findById('675beb6f710c8a370e1beeb6'); // Replace with user-specific logic
     res.json({
@@ -201,7 +200,59 @@ app.get('/getUpdatedData', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Error fetching data' });
   }
+});*/}
+
+
+{/*const uploadsDir = 'uploads/';
+if (!fs.existsSync(uploadsDir)){
+    fs.mkdirSync(uploadsDir);
+}
+*/}
+// Define storage for uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Directory to store files
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname)); // Ensure unique filenames
+  }
 });
+
+const upload = multer({ 
+  storage,
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ['application/pdf', 'text/plain'];
+    if (!allowedTypes.includes(file.mimetype)) {
+      return cb(new Error('Only .pdf or .txt files are allowed!'), false);
+    }
+    cb(null, true);
+  }
+});
+
+// POST: Upload Resume
+app.post('/upload', upload.single('resume'), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+
+  try {
+    // Assuming you want to save the filename to the user's record
+    const userId = '675beb6f710c8a370e1beeb6'; // Replace with user-specific logic
+    await User.findByIdAndUpdate(userId, { resumeFileName: req.file.filename });
+
+    console.log(`File uploaded: ${req.file.filename}`);
+    res.status(200).json({ message: 'Resume uploaded successfully!', file: req.file.filename });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error saving file information to the database.' });
+  }
+});
+
+
+
+
+
 
 
 
@@ -228,6 +279,32 @@ app.get('/get-user-form', async (req, res) => {
   } catch (error) {
     console.error('Error fetching form data:', error);
     res.status(500).json({ message: 'Error fetching form data', error: error.message });
+  }
+});
+
+
+
+//update
+
+app.post('/updateuser', async (req, res) => {
+  console.log('Request body:', req.body); // Log the request body
+
+  const { ObjectId } = require('mongoose').Types;
+  if (!ObjectId.isValid(req.body._id)) {
+      return res.status(400).json({ message: 'Invalid user ID' });
+  }
+
+  try {
+      const updatedUser  = await User.findByIdAndUpdate(req.body._id, req.body, { new: true });
+
+      if (!updatedUser ) {
+          return res.status(404).json({ message: 'User  not found' });
+      }
+
+      res.status(200).json({ message: 'User  updated successfully', user: updatedUser  });
+  } catch (error) {
+      console.error('Error details:', error);
+      res.status(500).json({ message: 'Error updating user', error: error.message });
   }
 });
 
