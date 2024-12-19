@@ -10,6 +10,8 @@ const Step4 = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(''); // State for success message
+
 
 
   useEffect(() => {
@@ -40,20 +42,6 @@ const Step4 = () => {
       });
   }, []);  // Empty dependency array ensures this runs only once on mount
   
-  const handleSubmit = async () => {
-    const dataToSubmit = {
-        ...updatedData // Ensure updatedData contains the necessary fields, including _id
-    };
-
-    console.log('Data to submit:', dataToSubmit); // Log the data being sent
-
-    // Send the request to update the user
-    const response = await axios.post('http://localhost:5000/updateuser', dataToSubmit);
-    
-    // If the request is successful, show a success message
-    alert('User  updated successfully!');
-    console.log('Server response:', response.data);
-};
 
   // Handle error state
   if (error) {
@@ -68,10 +56,24 @@ const Step4 = () => {
   const toggleEdit = () => {
     setIsEditing(!isEditing);
   };
+  
+
+
+  // Handle form submission and navigate to Submit.js
+  const handleSubmit = (e) => {
+    e.preventDefault();  // Prevent default form submission behavior
+    console.log("Submitting form...");
+     // Simulate a successful form submission (this can be replaced with your actual API call)
+     setSuccessMessage('User data successfully submitted!');  // Set the success message
+    
+    
+  };
+  
   // Render the component
   return (
     <div className="step-container">
       <h3>Step 4: Review and Submit</h3>
+      <form onSubmit={handleSubmit}>
       <FaEdit className="edit-icon" onClick={toggleEdit} /> {/* Edit icon in the top right corner */}
 
       <div className="review-section">
@@ -107,6 +109,10 @@ const Step4 = () => {
 
       {/* Submit button */}
       <button onClick={handleSubmit}>Submit Form</button>
+    </form>
+    {/* Display the success message after submission */}
+    {successMessage && <div className="success-message">{successMessage}</div>}
+  
     </div>
   );
 };

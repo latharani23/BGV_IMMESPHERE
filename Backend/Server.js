@@ -10,7 +10,7 @@ const path = require('path');
 const app = express();
 const FormData = require('./models/FormData'); // Import FormData model
 const UserForm = require('./models/UserForm'); // Import UserForm model
-const UpdatedUser  = require('./models/updatedUser.js'); // Correct import
+const UserModel = require('./models/usermodel'); // Import the renamed UserModel
 app.use(express.json());
 
 // Middleware
@@ -282,31 +282,12 @@ app.get('/get-user-form', async (req, res) => {
   }
 });
 
+//handle submit step 
 
 
-//update
 
-app.post('/updateuser', async (req, res) => {
-  console.log('Request body:', req.body); // Log the request body
 
-  const { ObjectId } = require('mongoose').Types;
-  if (!ObjectId.isValid(req.body._id)) {
-      return res.status(400).json({ message: 'Invalid user ID' });
-  }
 
-  try {
-      const updatedUser  = await User.findByIdAndUpdate(req.body._id, req.body, { new: true });
-
-      if (!updatedUser ) {
-          return res.status(404).json({ message: 'User  not found' });
-      }
-
-      res.status(200).json({ message: 'User  updated successfully', user: updatedUser  });
-  } catch (error) {
-      console.error('Error details:', error);
-      res.status(500).json({ message: 'Error updating user', error: error.message });
-  }
-});
 
 // Start the server
 app.listen(5000, () => {
